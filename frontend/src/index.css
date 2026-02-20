@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+:root {
+  --bg-wall: #f3f4f6;
+  --bg-note-yellow: #fef3c7;
+  --bg-note-pink: #fce7f3;
+  --bg-note-blue: #dbeafe;
+  --bg-note-green: #dcfce7;
+  --text-ink: #1e293b;
+  --text-fade: #64748b;
+  --shadow-paper: 2px 3px 5px rgba(0, 0, 0, 0.1);
+  --shadow-lifted: 5px 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-wall);
+  color: var(--text-ink);
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(#e5e7eb 1px, transparent 1px),
+    radial-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+  border: 2px solid #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Layout */
+.container {
+  max-width: 1400px;
+  /* Wider for the wall feel */
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Patrick Hand', cursive;
+  color: var(--text-ink);
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+  transform: rotate(-1deg);
+}
+
+.subtitle {
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: var(--text-fade);
+  margin-bottom: 3rem;
+  transform: rotate(1deg);
+}
+
+/* Masonry Grid */
+.my-masonry-grid {
+  display: flex;
+  margin-left: -2rem;
+  width: auto;
+  padding-bottom: 4rem;
+}
+
+.my-masonry-grid_column {
+  padding-left: 2rem;
+  background-clip: padding-box;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  /* Slightly rougher edges */
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: #1e293b;
+  color: #fff;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+  transform: rotate(-1deg);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) rotate(0deg);
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon {
+  background: transparent;
+  padding: 0.5rem;
+  color: var(--text-fade);
+  border-radius: 50%;
+}
+
+.btn-icon:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-ink);
+  transform: scale(1.1);
+}
+
+/* Forms - Paper Style */
+textarea,
+input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: var(--text-ink);
+  font-family: 'Indie Flower', cursive;
+  /* Handwritten input */
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  resize: vertical;
+  transition: all 0.2s ease;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  /* Paper corners */
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  border-color: #94a3b8;
+  background: #fff;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05), 0 0 0 3px rgba(148, 163, 184, 0.2);
+}
+
+/* Cards (Sticky Notes) */
+.card {
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-paper);
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  color: #1e293b;
+  /* Background color set inline by JS */
+}
+
+.card:hover {
+  z-index: 10;
+  box-shadow: var(--shadow-lifted);
+}
+
+/* "Tape" effect */
+.card::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+}
+
+.confession-text {
+  font-family: 'Caveat', cursive;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+/* Stats (Corkboard Widget) */
+.stats-container {
+  background: #fff;
+  border: 8px solid #f1f5f9;
+  /* Frame */
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 4rem;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stat-value {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #3b82f6;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Modal (Notepad) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2.5rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  position: relative;
+  background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 100% 2rem;
+  line-height: 2rem;
+}
+
+.modal-header h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.close-button {
+  background: #fee2e2;
+  color: #ef4444;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.close-button:hover {
+  background: #fecaca;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 2px dashed #cbd5e1;
+  /* Perforated line */
+}
+
+.logo {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Create Form (Notebook Page) */
+.create-form-container {
+  background: #fff;
+  padding: 2.5rem;
+  margin-bottom: 4rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-left: 4px solid #ef4444;
+  /* Margin line */
+  transform: rotate(0.5deg);
+}
+
+.create-form-header h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* Actions */
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+  /* Perforated line */
+}
+
+.reaction-btn {
+  background: transparent;
+  color: var(--text-fade);
+  padding: 0.4rem;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  /* Keep numbers readable */
+  font-size: 0.9rem;
+}
+
+.reaction-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-ink);
+}
+
+/* Trending Badge (Sticker) */
+.trending-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #fbbf24;
+  color: #fff;
+  font-family: 'Patrick Hand', cursive;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 4px;
+  transform: rotate(-3deg);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  border: 2px solid #fff;
+}
