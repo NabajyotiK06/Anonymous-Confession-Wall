@@ -10,6 +10,7 @@ function ConfessionCard({ confession, refresh, isTrending }) {
   const [modalAction, setModalAction] = useState("");
   const [secretCode, setSecretCode] = useState("");
   const [newText, setNewText] = useState("");
+  const [newSubject, setNewSubject] = useState("");
   const [showActions, setShowActions] = useState(false);
 
   // Random visuals state
@@ -98,6 +99,7 @@ function ConfessionCard({ confession, refresh, isTrending }) {
     setModalAction("edit");
     setSecretCode("");
     setNewText(confession.text);
+    setNewSubject(confession.subject || "");
     setIsModalOpen(true);
     setShowActions(false);
   };
@@ -106,6 +108,7 @@ function ConfessionCard({ confession, refresh, isTrending }) {
     setIsModalOpen(false);
     setSecretCode("");
     setNewText("");
+    setNewSubject("");
   };
 
   const handleSubmit = async () => {
@@ -122,6 +125,7 @@ function ConfessionCard({ confession, refresh, isTrending }) {
       } else if (modalAction === "edit") {
         await api.put(`/confessions/${confession._id}`, {
           text: newText,
+          subject: newSubject,
           secretCode
         });
       }
@@ -195,6 +199,17 @@ function ConfessionCard({ confession, refresh, isTrending }) {
           </div>
         </div>
 
+        {confession.subject && (
+          <h4 style={{
+            fontSize: "1.2rem",
+            marginBottom: "0.5rem",
+            borderBottom: "1px solid rgba(0,0,0,0.05)",
+            paddingBottom: "0.2rem",
+            color: "#1e293b"
+          }}>
+            {confession.subject}
+          </h4>
+        )}
         <p className="confession-text">{confession.text}</p>
 
         <div className="card-actions">
@@ -240,13 +255,21 @@ function ConfessionCard({ confession, refresh, isTrending }) {
         title={modalAction === "edit" ? "Rewrite Note" : "Burn Note"}
       >
         {modalAction === "edit" && (
-          <textarea
-            value={newText}
-            onChange={(e) => setNewText(e.target.value)}
-            placeholder="Edit your confession..."
-            rows="5"
-            style={{ marginBottom: "1rem", background: "#fefce8", border: "none", boxShadow: "inset 0 0 5px rgba(0,0,0,0.05)" }}
-          />
+          <>
+            <input
+              value={newSubject}
+              onChange={(e) => setNewSubject(e.target.value)}
+              placeholder="Subject (Optional)"
+              style={{ marginBottom: "1rem", fontFamily: "Patrick Hand", fontWeight: "600" }}
+            />
+            <textarea
+              value={newText}
+              onChange={(e) => setNewText(e.target.value)}
+              placeholder="Edit your confession..."
+              rows="5"
+              style={{ marginBottom: "1rem", background: "#fefce8", border: "none", boxShadow: "inset 0 0 5px rgba(0,0,0,0.05)" }}
+            />
+          </>
         )}
         <div style={{ position: "relative", marginBottom: "1rem" }}>
           <input

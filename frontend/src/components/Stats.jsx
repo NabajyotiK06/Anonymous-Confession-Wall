@@ -88,12 +88,6 @@ function Stats({ totalConfessions, totalReactions, confessions = [] }) {
                     border: "2px solid #e2e8f0"
                 }}
             >
-                {/* Coffee Stain */}
-                <div style={{
-                    position: "absolute", inset: 0, borderRadius: "50%",
-                    background: "radial-gradient(circle at 70% 30%, transparent 60%, rgba(120, 53, 15, 0.05) 65%, transparent 70%)",
-                    pointerEvents: "none"
-                }}></div>
 
                 <div style={{ position: "absolute", top: "0", right: "20px", transform: "translateY(-50%) rotate(15deg)" }}>
                     <Pin size={32} color="#ef4444" fill="#ef4444" style={{ filter: "drop-shadow(2px 4px 6px rgba(0,0,0,0.2))" }} />

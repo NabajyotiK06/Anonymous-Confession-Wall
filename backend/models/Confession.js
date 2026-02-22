@@ -5,6 +5,10 @@ const confessionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  subject: {
+    type: String,
+    default: ""
+  },
   secretCode: {
     type: String,
     required: true,
@@ -22,6 +26,14 @@ const confessionSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true
+  },
+  availableAt: {
+    type: Date,
+    default: null
+  },
+  deleteAt: {
+    type: Date,
+    default: null
   }
 });
 

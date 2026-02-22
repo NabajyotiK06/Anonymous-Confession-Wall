@@ -7,15 +7,18 @@ const router = express.Router();
 
 
 router.post("/", ensureAuth, async (req, res) => {
-  const { text, secretCode } = req.body;
+  const { text, subject, secretCode, availableAt, deleteAt } = req.body;
 
   if (secretCode.length < 4)
     return res.status(400).json({ message: "Secret code too short" });
 
   const newConfession = await Confession.create({
     text,
+    subject: subject || "",
     secretCode,
-    userId: req.user.id
+    userId: req.user.id,
+    availableAt: availableAt || null,
+    deleteAt: deleteAt || null
   });
 
   res.json(newConfession);
@@ -24,14 +27,26 @@ router.post("/", ensureAuth, async (req, res) => {
 
 
 router.get("/", async (req, res) => {
-  const confessions = await Confession.find().sort({ createdAt: -1 });
+  const now = new Date();
+
+  // Cleanup: Delete expired confessions
+  await Confession.deleteMany({ deleteAt: { $ne: null, $lt: now } });
+
+  // Fetch only available confessions
+  const confessions = await Confession.find({
+    $or: [
+      { availableAt: null },
+      { availableAt: { $lte: now } }
+    ]
+  }).sort({ createdAt: -1 });
+
   res.json(confessions);
 });
 
 
 
 router.put("/:id", ensureAuth, async (req, res) => {
-  const { text, secretCode } = req.body;
+  const { text, subject, secretCode } = req.body;
 
   const confession = await Confession.findById(req.params.id);
 
@@ -39,6 +54,7 @@ router.put("/:id", ensureAuth, async (req, res) => {
     return res.status(400).json({ message: "Wrong secret code" });
 
   confession.text = text;
+  if (subject !== undefined) confession.subject = subject;
   await confession.save();
 
   res.json(confession);
