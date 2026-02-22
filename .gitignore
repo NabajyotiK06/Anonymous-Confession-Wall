@@ -5,6 +5,12 @@ node_modules/
 .DS_Store
 dist/
 build/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Backend
 backend/.env
@@ -18,10 +24,12 @@ frontend/dist-ssr/
 frontend/*.local
 frontend/.vscode/*
 !frontend/.vscode/extensions.json
+frontend/logs/
 
 # Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
+yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
