@@ -16,12 +16,12 @@ function Navbar({ user }) {
                             <span style={{ opacity: 0.7 }}>Logged in as </span>
                             <strong>{user.displayName}</strong>
                         </div>
-                        <a href="http://localhost:5000/auth/logout" className="nav-btn" title="Logout">
+                        <a href={`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/auth/logout`} className="nav-btn" title="Logout">
                             <LogOut size={20} />
                         </a>
                     </>
                 ) : (
-                    <a href="http://localhost:5000/auth/google" className="btn-primary">
+                    <a href={`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/auth/google`} className="btn-primary">
                         <User size={18} />
                         <span>Login with Google</span>
                     </a>

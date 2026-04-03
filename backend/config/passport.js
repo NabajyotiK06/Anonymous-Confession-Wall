@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config(); // ✅ ensures env variables load here too
+dotenv.config();
 
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:5000/auth/google/callback"
+      callbackURL: (process.env.BACKEND_URL || "http://localhost:5000") + "/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
       return done(null, profile);

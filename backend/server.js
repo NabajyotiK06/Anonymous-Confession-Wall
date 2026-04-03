@@ -11,32 +11,32 @@ import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
-
 connectDB();
 
-
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 
-app.use(session({
-  secret: "supersecret",
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "supersecret",
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use("/auth", authRoutes);
 app.use("/confessions", confessionRoutes);
 
-
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
